@@ -1,3 +1,8 @@
 package main
 
-func Handler()
+import "net/http"
+
+func Handler(w http.ResponseWriter, r *http.Response)
+{
+
+}
