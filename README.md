@@ -1,2 +1,2 @@
 # BMSTURepApp
-Unedited README.md file
+An educational project on Go/chi
