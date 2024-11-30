@@ -1,4 +1,4 @@
-package groups
+package reservations
 
 import (
 	structures "BMSTURepApp/internal/domain"
@@ -9,17 +9,17 @@ import (
 	"net/http"
 )
 
-func UpdateGroup(w http.ResponseWriter, r *http.Request, database *storage.DB) {
-	var group structures.Group
+func UpdateReservation(w http.ResponseWriter, r *http.Request, database *storage.DB) {
+	var reservation structures.Reservation
 
-	err := render.DecodeJSON(r.Body, &group)
+	err := render.DecodeJSON(r.Body, &reservation)
 	if err != nil {
 		render.JSON(w, r, resp.Error("Failed to decode request"))
 		return
 	}
-	database.UpdateGroupinfo(group)
+	database.UpdateReservInfo(reservation)
 
-	data, err := json.Marshal(group)
+	data, err := json.Marshal(reservation)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		w.Write([]byte(err.Error()))

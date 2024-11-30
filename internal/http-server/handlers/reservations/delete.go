@@ -1,4 +1,4 @@
-package groups
+package reservations
 
 import (
 	structures "BMSTURepApp/internal/domain"
@@ -8,13 +8,13 @@ import (
 	"net/http"
 )
 
-func DeleteGroup(w http.ResponseWriter, r *http.Request, database *storage.DB) resp.Response {
-	var group structures.Group
-	err := render.DecodeJSON(r.Body, &group)
+func DeleteReservation(w http.ResponseWriter, r *http.Request, database *storage.DB) resp.Response {
+	var reservation structures.Reservation
+	err := render.DecodeJSON(r.Body, &reservation)
 	if err != nil {
 		render.JSON(w, r, resp.Error("Failed to decode request"))
 		return resp.Error("failed to decode request")
 	}
-	database.DeleteGroup(group.Id)
+	database.DeleteReserv(reservation.Id)
 	return resp.OK()
 }

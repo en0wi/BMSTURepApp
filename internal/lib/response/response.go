@@ -3,6 +3,7 @@ package response
 type Response struct {
 	Status string `json:"status"`
 	Error  string `json:"error,omitempty"`
+	Body   string `json:"body,omitempty"`
 }
 
 const (
@@ -16,9 +17,9 @@ func OK() Response {
 	}
 }
 
-func Error(errorMesage string) Response {
+func Error(errorMessage string) Response {
 	return Response{
 		Status: StatusError,
-		Error:  errorMesage,
+		Error:  errorMessage,
 	}
 }

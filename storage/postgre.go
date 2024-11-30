@@ -1,4 +1,4 @@
-package postgre
+package storage
 
 import (
 	"database/sql"

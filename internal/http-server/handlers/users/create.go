@@ -1,36 +1,24 @@
-package create
+package users
 
 import (
+	structures "BMSTURepApp/internal/domain"
 	resp "BMSTURepApp/internal/lib/response"
+	"BMSTURepApp/storage"
 	"github.com/go-chi/render"
 	"net/http"
 )
-
-type User struct {
-	firstName   string
-	surname     string
-	lastName    string
-	groupID     string
-	phoneNumber string
-	telegramTag string
-	vkLink      string
-}
 
 type Response struct {
 	resp.Response
 }
 
-func Create() http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
-		var user User
+func CreateUser(w http.ResponseWriter, r *http.Request, database *storage.DB) {
+	var user structures.User
 
-		err := render.DecodeJSON(r.Body, &user)
-
-		if err != nil {
-			// log = ... надо дописать логгер
-			render.JSON(w, r, resp.Error("Failed to decode request"))
-			return
-		}
-
+	err := render.DecodeJSON(r.Body, &user)
+	if err != nil {
+		render.JSON(w, r, resp.Error("Failed to decode request"))
+		return
 	}
+	database.CreateUser(user)
 }

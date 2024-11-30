@@ -1,7 +1,6 @@
 package config
 
 import (
-	"fmt"
 	"github.com/ilyakaznacheev/cleanenv"
 	"log"
 	"os"
@@ -9,9 +8,10 @@ import (
 )
 
 type Config struct {
-	Environment string `yaml:"env" env-default:"dev"`
-	StoragePath string `yaml:"storage_path" env-required:"true"`
-	HTTPServer  `yaml:"http_server"`
+	Environment      string `yaml:"env" env-default:"dev"`
+	StoragePath      string `yaml:"storage_path" env-required:"true"`
+	ConnectionString string `yaml:"connection_string" env-required:"true"`
+	HTTPServer       `yaml:"http_server"`
 }
 
 type HTTPServer struct {
@@ -22,14 +22,10 @@ type HTTPServer struct {
 
 func Load() Config {
 
-	defaultConfigPath := "config/local.yaml"
-	if err := os.Setenv("CONFIG_PATH", defaultConfigPath); err != nil {
-		fmt.Println("Error setting environment variable:", err)
-	}
-
 	configPath := os.Getenv("CONFIG_PATH")
 	if configPath == "" {
-		log.Fatal("CONFIG_PATH is empty")
+		log.Println("CONFIG_PATH is empty")
+		configPath = "config/local.yaml"
 	}
 
 	// checks if config file exists
