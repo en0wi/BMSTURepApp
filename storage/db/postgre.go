@@ -1,4 +1,4 @@
-package storage
+package db
 
 import (
 	"database/sql"
@@ -19,4 +19,8 @@ func NewDB(dataSourceName string) (*DB, error) {
 	}
 
 	return &DB{conn: conn}, nil
+}
+
+func (db *DB) CloseDb() error {
+	return db.conn.Close()
 }

@@ -3,13 +3,13 @@ package users
 import (
 	structures "BMSTURepApp/internal/domain"
 	resp "BMSTURepApp/internal/lib/response"
-	"BMSTURepApp/storage"
+	"BMSTURepApp/storage/db"
 	"encoding/json"
 	"github.com/go-chi/render"
 	"net/http"
 )
 
-func ReadUser(w http.ResponseWriter, r *http.Request, database *storage.DB) {
+func ReadUser(w http.ResponseWriter, r *http.Request, database *db.DB) {
 	var user structures.User
 
 	err := render.DecodeJSON(r.Body, &user)
@@ -17,7 +17,7 @@ func ReadUser(w http.ResponseWriter, r *http.Request, database *storage.DB) {
 		render.JSON(w, r, resp.Error("Failed to decode request"))
 		return
 	}
-	database.ReadUserinfo(user.Id)
+	database.Read_Userinfo(user.Id)
 
 	data, err := json.Marshal(user)
 	if err != nil {

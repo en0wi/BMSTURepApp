@@ -5,17 +5,19 @@ import (
 	"BMSTURepApp/internal/http-server/handlers/groups"
 	"BMSTURepApp/internal/http-server/handlers/reservations"
 	"BMSTURepApp/internal/http-server/handlers/users"
-	"BMSTURepApp/storage"
+	resp "BMSTURepApp/internal/lib/response"
+	"BMSTURepApp/storage/db"
 	"fmt"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
+	"log"
 	"net/http"
 	"os"
 )
 
 func main() {
 	cfg := config.Load()
-	database, err := storage.NewDB(cfg.ConnectionString)
+	database, err := db.NewDB(cfg.ConnectionString)
 
 	if err != nil {
 		fmt.Printf("Error with storage: %s", err)
@@ -28,6 +30,13 @@ func main() {
 	router.Use(middleware.Recoverer)
 	router.Use(middleware.URLFormat)
 
+	server := &http.Server{
+		Addr:         cfg.Address,
+		Handler:      router,
+		ReadTimeout:  cfg.HTTPServer.Timeout,
+		WriteTimeout: cfg.HTTPServer.Timeout,
+		IdleTimeout:  cfg.HTTPServer.IdleTimeout,
+	}
 	router.Method("POST", "/userCreation/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		users.CreateUser(w, r, database)
 	}))
@@ -65,7 +74,11 @@ func main() {
 		reservations.DeleteReservation(w, r, database)
 	}))
 
-	http.ListenAndServe(":3000", router)
-}
+	if err := server.ListenAndServe(); err != nil {
+		resp.Error("failed to start server")
+		log.Println("failed to start server")
+	}
 
-// TODO : gitignore file
+	log.Printf("server stopped")
+
+}

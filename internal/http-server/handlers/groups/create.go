@@ -3,7 +3,7 @@ package groups
 import (
 	structures "BMSTURepApp/internal/domain"
 	resp "BMSTURepApp/internal/lib/response"
-	"BMSTURepApp/storage"
+	"BMSTURepApp/storage/db"
 	"github.com/go-chi/render"
 	"net/http"
 )
@@ -12,7 +12,7 @@ type Response struct {
 	resp.Response
 }
 
-func CreateGroup(w http.ResponseWriter, r *http.Request, database *storage.DB) {
+func CreateGroup(w http.ResponseWriter, r *http.Request, database *db.DB) {
 	var group structures.Group
 
 	err := render.DecodeJSON(r.Body, &group)
@@ -20,5 +20,5 @@ func CreateGroup(w http.ResponseWriter, r *http.Request, database *storage.DB) {
 		render.JSON(w, r, resp.Error("Failed to decode request"))
 		return
 	}
-	database.CreateGroup(group)
+	database.Create_Group(group)
 }

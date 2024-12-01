@@ -3,27 +3,28 @@ package domain
 import "time"
 
 type User struct {
-	Id            int
-	Given_name    string
-	Family_name   string
-	Middle_name   string
-	Student_group string
-	Phone_number  string
-	Description   string
-	TelegramTag   string
-	VkLink        string
-	Is_admin      bool
-	Is_banned     bool
+	Id           int
+	First_name   string
+	Middle_name  string
+	Last_name    string
+	Num_of_group string
+	Phone_number string
+	Description  string
+	Tg_tag       string
+	Vk_tag       string
+	Is_admin     bool
+	Is_banned    bool
 }
 
 type Reservation struct {
-	Id             int
-	Status         string
-	Datetime_start time.Time
-	Datetime_end   time.Time
-	Color          string
-	Place          int
-	Is_repeatable  bool
+	Id            int
+	Status        string
+	Group_id      int
+	Start_time    time.Time
+	End_time      time.Time
+	Color         string
+	Place         int
+	Is_repeatable bool
 }
 
 type Group struct {

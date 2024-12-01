@@ -3,4 +3,4 @@ storage_path: "./storage/storage.db"
 address: "localhost:8080"
 timeout: 4s
 idle_timeout: 60s
-connection_string: "user=checker password=1029384756 dbname=repetitions sslmode=disable"
+connection_string: "user=checker password=1029384756 dbname=artclub-rep sslmode=disable port=5433"
