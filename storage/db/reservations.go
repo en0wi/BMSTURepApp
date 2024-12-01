@@ -41,7 +41,7 @@ func (db *ReservDB) Create_Reserv(reserv Reservation) (int, error) {
   return id, nil
 }
 
-func (db *ReservDB) Read_Reservinfo(id int) (Reservation , error) {
+func (db *ReservDB) Read_Reservinfo(id int) (Reservation, error) {
   var reserv Reservation
   err := db.Conn.QueryRow("SELECT id, status,group_id, start_time, end_time, color,place, is_repeatable FROM reservation WHERE id=$1", id).Scan(&reserv.Id, &reserv.Status, &reserv.Group_id, &reserv.start_time, &reserv.End_time, &reserv.Color, &reserv.Place, &reserv.Is_repeatable)
   if err != nil {

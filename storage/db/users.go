@@ -46,7 +46,7 @@ func (db *DB) Create_User(user User) (int, error) {
   return id, nil
 }
 
-func (db *DB) Read_Userinfo(id int) (User , error) {
+func (db *DB) Read_Userinfo(id int) (User, error) {
   var user User
   err := db.Conn.QueryRow("SELECT id, first_name, middle_name, last_name, num_of_group, phone_number, description, tg_tag, vk_tag, is_admin, is_banned FROM users WHERE id=$1", id).Scan(&user.Id, &user.First_name, &user.Middle_name, &user.Last_name, &user.Num_of_group, &user.Phone_number, &user.Description, &user.Tg_tag, &user.Vk_tag, &user.Is_admin, &user.Is_banned)
   if err != nil {

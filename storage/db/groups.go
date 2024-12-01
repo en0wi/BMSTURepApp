@@ -37,7 +37,7 @@ func (db *GroupDB) Create_Group(group Group) (int, error) {
   return id, nil
 }
 
-func (db *GroupDB) Read_Groupinfo(id int) (Group , error) {
+func (db *GroupDB) Read_Groupinfo(id int) (Group, error) {
   var group Group
   err := db.Conn.QueryRow("SELECT id, group_name, description, is_academy FROM groups WHERE id=$1", id).Scan(&group.Id, &group.Group_name,&group.Description,&group.Is_academy)
   if err != nil {

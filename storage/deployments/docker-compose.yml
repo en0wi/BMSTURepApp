@@ -57,7 +57,7 @@ services:
             - migrator.env
         build:
             context: ../migrations
-            dockerfile: Dockerfile
+            dockerfile: ../migrations/Dockerfile
         networks:
             - postgres-artclub-rep
 
